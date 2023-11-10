@@ -40,6 +40,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "BCrypt.Net": {
+              "target": "Package",
+              "version": "[0.1.0, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[5.1.2, )"
@@ -61,6 +65,10 @@
             "Microsoft.Owin.Security.Cookies": {
               "target": "Package",
               "version": "[4.2.2, )"
+            },
+            "NewsAPI": {
+              "target": "Package",
+              "version": "[0.7.0, )"
             }
           },
           "imports": [
