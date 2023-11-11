@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 
@@ -7,8 +8,15 @@ namespace Artikulo.Models.ViewModel
     public class UserModel
     {
         [Key]
+
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int UserID { get; set; }
-        [RegularExpression(@"^[\w\.-]+@[\w\.-]+\.\w+$", ErrorMessage = "Login ID should be a valid email address.")]
+        public int ProfileID { get; set; }
+
+        [Required(AllowEmptyStrings = true)]
+        public string AccountImage { get; set; }
+
+        // [RegularExpression(@"^[\w\.-]+@[\w\.-]+\.\w+$", ErrorMessage = "Login ID should be a valid email address.")]
         [Required(ErrorMessage = "*")]
         [Display(Name = "Login ID")]
         public string LoginName { get; set; }
@@ -26,15 +34,24 @@ namespace Artikulo.Models.ViewModel
         [Required(ErrorMessage = "*")]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [Display(Name = "Address")]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "*")]
+        [Display(Name = "Phone Number")]
+        public string PhoneNumber { get; set; }
         public string Gender { get; set; }
 
         [Required(ErrorMessage = "*")]
         [Display(Name = "Created By")]
         public int CreatedBy { get; set; }
-
-        [Required(AllowEmptyStrings = true)]
-        public string AccountImage { get; set; }
-
         public int RoleID { get; set; }
         public string RoleName { get; set; }
     }
@@ -42,7 +59,6 @@ namespace Artikulo.Models.ViewModel
     public class UsersModel
     {
         public List<UserModel> Users { get; set; }
-
     }
 
     public class UserLoginModel
@@ -57,6 +73,4 @@ namespace Artikulo.Models.ViewModel
         [Display(Name = "Password")]
         public string Password { get; set; }
     }
-
-
 }

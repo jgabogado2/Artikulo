@@ -8,6 +8,7 @@ namespace Artikulo.Models.DB
         public int UserID { get; set; }
         public string LoginName { get; set; }
         public string PasswordEncryptedText { get; set; }
+        public string Salt { get; set; }
         public int CreatedBy { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public int ModifiedBy { get; set; }

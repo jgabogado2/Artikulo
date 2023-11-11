@@ -23,21 +23,6 @@ namespace Artikulo.Controllers
             return View();
         }
 
-        public ActionResult Profile()
-        {
-            UserManager um = new UserManager();
-            string loginName = User.Identity.Name;
-
-            UsersModel user = um.getLoginName(loginName);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
         [AuthorizeRoles("Admin")]
         public ActionResult Users()
         {
@@ -48,6 +33,14 @@ namespace Artikulo.Controllers
             return View(user);
         }
 
+        [AuthorizeRoles("Admin", "Member")]
+        public ActionResult MyProfile()
+        {
+
+            UserManager um = new UserManager();
+            UsersModel user = um.GetAllUsers();
+            return View(user);
+        }
 
         [HttpPost]
         public ActionResult SignUp(UserModel user)
@@ -73,6 +66,8 @@ namespace Artikulo.Controllers
         [HttpPut]
         public async Task<ActionResult> Update([FromBody] UserModel userData)
         {
+            ModelState.Remove("Password");
+
             UserManager um = new UserManager();
             if (um.IsLoginNameExist(userData.LoginName))
             {
@@ -86,41 +81,37 @@ namespace Artikulo.Controllers
         [HttpPost]
         public ActionResult LogIn(UserLoginModel ulm)
         {
-
             if (ModelState.IsValid)
             {
                 UserManager um = new UserManager();
+                string storedHashedPassword = um.GetUserPassword(ulm.LoginName);
 
-                if (string.IsNullOrEmpty(ulm.Password))
+                if (string.IsNullOrEmpty(storedHashedPassword) || string.IsNullOrEmpty(ulm.Password))
                 {
                     ModelState.AddModelError("", "The user login or password provided is incorrect.");
                 }
-                else
+                else if (BCrypt.Net.BCrypt.Verify(ulm.Password, storedHashedPassword))
                 {
-                    if (ulm.Password.Equals(ulm.Password))
-                    {
-                        var claims = new List<Claim>
+                    var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Name, ulm.LoginName)
                     };
 
-                        var userIdentity = new ClaimsIdentity(claims, "login");
+                    var userIdentity = new ClaimsIdentity(claims, "login");
 
-                        ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
 
-                        // Sign in the user using Cookie Authentication
-                        HttpContext.SignInAsync(principal);
+                    // Sign in the user using Cookie Authentication
+                    HttpContext.SignInAsync(principal);
 
-                        // Redirect to the desired action (e.g., "Users")
-                        return RedirectToAction("Users");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "The password provided is incorrect.");
-                    }
+                    // Redirect to the desired action (e.g., "Users")
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "The password provided is incorrect.");
                 }
             }
-
             // If authentication fails or ModelState is invalid, redisplay the login form
             return View();
         }

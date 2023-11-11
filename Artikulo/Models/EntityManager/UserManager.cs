@@ -1,21 +1,32 @@
 ﻿using Artikulo.Models.DB;
 using Artikulo.Models.ViewModel;
+using BCrypt.Net;
 
 namespace Artikulo.Models.EntityManager
 {
     public class UserManager
     {
+        private (string hashedPassword, string salt) HashPassword(string password)
+        {
+            string salt = BCrypt.Net.BCrypt.GenerateSalt();
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
+            return (hashedPassword, salt);
+        }
         public void AddUserAccount(UserModel user)
         {
             using (MyDBContext db = new MyDBContext())
             {
-                //Add checking here if login exists
 
-                SystemUsers newSysUser = new SystemUsers
+                // Hashing password
+                (string hashedPassword, string salt) = HashPassword(user.Password);
+                //Add checking here if login exists
+                SystemUsers newSysUser = new SystemUsers
                 {
                     LoginName = user.LoginName,
-                    PasswordEncryptedText = user.Password, //this has to be encrypted
-                    CreatedDateTime = DateTime.Now,
+                    PasswordEncryptedText = hashedPassword,
+                    Salt = salt,
+                    CreatedDateTime = DateTime.Now,
+                    ModifiedBy = 1,
                     ModifiedDateTime = DateTime.Now
                 };
 
@@ -26,18 +37,19 @@ namespace Artikulo.Models.EntityManager
 
                 Users newUser = new Users
                 {
-                    ProfileID = 0,
                     UserID = newUserId,
+                    AccountImage = user.AccountImage,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
+                    Email = user.Email,
+                    Address = user.Address,
+                    PhoneNumber = user.PhoneNumber,
                     Gender = user.Gender,
-                    CreatedBy = newUserId,
+                    CreatedBy = 1,
                     CreatedDateTime = DateTime.Now,
                     ModifiedBy = 1,
-                    ModifiedDateTime = DateTime.Now,
-                    AccountImage = user.AccountImage
+                    ModifiedDateTime = DateTime.Now
                 };
-
                 db.Users.Add(newUser);
                 db.SaveChanges();
 
@@ -56,8 +68,35 @@ namespace Artikulo.Models.EntityManager
 
                 db.UserRole.Add(userRole);
                 db.SaveChanges();
-
             }
+        }
+
+        public bool VerifyPassword(string loginName, string currentPassword)
+        {
+            using (MyDBContext db = new MyDBContext())
+            {
+                SystemUsers user = db.SystemUsers.FirstOrDefault(u => u.LoginName == loginName);
+
+                if (user != null)
+                {
+                    // Retrieve the salt and hashed password from the database
+                    string salt = user.Salt;
+                    string storedHashedPassword = user.PasswordEncryptedText;
+
+                    // Hash the current password with the retrieved salt
+                    string hashedPassword = HashPassword(currentPassword, salt);
+
+                    // Compare the newly hashed password with the stored hashed password
+                    return hashedPassword == storedHashedPassword;
+                }
+
+                return false; // User not found
+            }
+        }
+
+        private string HashPassword(string password, string salt)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(password, salt);
         }
 
         public void UpdateUserAccount(UserModel user)
@@ -65,48 +104,57 @@ namespace Artikulo.Models.EntityManager
             using (MyDBContext db = new MyDBContext())
             {
                 // Check if a user with the given login name already exists
-                SystemUsers existingSysUser = db.SystemUsers.FirstOrDefault(u => u.LoginName == user.LoginName);
-                Users existingUser = db.Users.FirstOrDefault(u => u.UserID == existingSysUser.UserID);
-
-                if (existingSysUser != null && existingUser != null)
+                SystemUsers existingSysUser = db.SystemUsers.FirstOrDefault(u => u.LoginName == user.LoginName);
+                if (existingSysUser != null)
                 {
-                    // Update the existing user
-                    existingSysUser.ModifiedBy = 1; // This has to be updated
-                    existingSysUser.ModifiedDateTime = DateTime.Now;
+                    Users existingUser = db.Users.FirstOrDefault(u => u.ProfileID == existingSysUser.UserID);
 
-                    if (user.Password != null)
+                    if (existingUser != null)
                     {
-                        existingSysUser.PasswordEncryptedText = user.Password;
+                        // Auto increments the Modified By at every update
+                        int currentModifiedBy = existingSysUser.ModifiedBy;
+                        int newModifiedBy = currentModifiedBy + 1;
+
+                        // Update the existing user
+                        existingSysUser.ModifiedBy = newModifiedBy;
+                        existingSysUser.ModifiedDateTime = DateTime.Now;
+
+                        // Hash New Password
+                        string newSalt = BCrypt.Net.BCrypt.GenerateSalt();
+                        string newHashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password, newSalt);
+
+                        // You can also update other properties of the user as needed   
+                        existingSysUser.PasswordEncryptedText = newHashedPassword;
+                        existingSysUser.Salt = newSalt;
+                        existingUser.AccountImage = user.AccountImage;
+                        existingUser.FirstName = user.FirstName;
+                        existingUser.LastName = user.LastName;
+                        existingUser.Email = user.Email;
+                        existingUser.Address = user.Address;
+                        existingUser.PhoneNumber = user.PhoneNumber;
+                        existingUser.Gender = user.Gender;
+
+                        db.SaveChanges();
                     }
-
-                    // You can also update other properties of the user as needed
-                    existingUser.FirstName = user.FirstName;
-                    existingUser.LastName = user.LastName;
-                    existingUser.Gender = user.Gender;
-
-
-                    UserRole userRole = db.UserRole.FirstOrDefault(ur => ur.UserID == existingUser.UserID);
-
-                    if (userRole != null)
-                    {
-                        userRole.LookUpRoleID = user.RoleID;
-                        db.UserRole.Update(userRole);
-                    }
-
-                    db.SaveChanges();
                 }
                 else
                 {
                     // Add a new user since the user doesn't exist
-                    SystemUsers newSysUser = new SystemUsers
+                    SystemUsers newSysUser = new SystemUsers
                     {
                         LoginName = user.LoginName,
-                        CreatedBy = 1,
-                        PasswordEncryptedText = user.Password, // Update this to handle encryption
-                        CreatedDateTime = DateTime.Now,
+                        PasswordEncryptedText = HashPassword(user.Password),
+                        CreatedDateTime = DateTime.Now,
                         ModifiedBy = 1,
                         ModifiedDateTime = DateTime.Now
                     };
+
+                    string HashPassword(string password)
+                    {
+                        string salt = BCrypt.Net.BCrypt.GenerateSalt();
+                        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
+                        return hashedPassword;
+                    }
 
                     db.SystemUsers.Add(newSysUser);
                     db.SaveChanges();
@@ -116,10 +164,14 @@ namespace Artikulo.Models.EntityManager
                     Users newUser = new Users
                     {
                         UserID = newUserId,
+                        AccountImage = user.AccountImage,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
-                        Gender = "1",
-                        CreatedBy = 1,
+                        Email = user.Email,
+                        Address = user.Address,
+                        PhoneNumber = user.PhoneNumber,
+                        Gender = user.Gender,
+                        CreatedBy = newUserId,
                         CreatedDateTime = DateTime.Now,
                         ModifiedBy = 1,
                         ModifiedDateTime = DateTime.Now
@@ -129,38 +181,6 @@ namespace Artikulo.Models.EntityManager
                     db.SaveChanges();
                 }
             }
-
-        }
-        public UsersModel getLoginName(string loginName)
-        {
-            UsersModel list = new UsersModel();
-
-            using (MyDBContext db = new MyDBContext())
-            {
-                var users = from u in db.Users
-                            join us in db.SystemUsers
-                            on u.UserID equals us.UserID
-                            join ur in db.UserRole
-                            on u.UserID equals ur.UserID
-                            join r in db.Role
-                            on ur.LookUpRoleID equals r.RoleID
-                            where us.LoginName == loginName
-                            select new { u, us, r, ur };
-
-                list.Users = users.Select(records => new UserModel()
-                {
-                    LoginName = records.us.LoginName,
-                    FirstName = records.u.FirstName,
-                    LastName = records.u.LastName,
-                    Password = records.us.PasswordEncryptedText,
-                    Gender = records.u.Gender,
-                    CreatedBy = records.u.CreatedBy,
-                    AccountImage = records.u.AccountImage ?? string.Empty,
-                    RoleID = records.ur.LookUpRoleID,
-                    RoleName = records.r.RoleName
-                }).ToList();
-            }
-            return list;
         }
 
         public UsersModel GetAllUsers()
@@ -180,19 +200,22 @@ namespace Artikulo.Models.EntityManager
 
                 list.Users = users.Select(records => new UserModel()
                 {
+                    AccountImage = records.u.AccountImage ?? string.Empty,
+                    UserID = records.us.UserID,
+                    ProfileID = records.u.ProfileID,
                     LoginName = records.us.LoginName,
+                    Password = records.us.PasswordEncryptedText,
                     FirstName = records.u.FirstName,
                     LastName = records.u.LastName,
+                    Email = records.u.Email,
+                    Address = records.u.Address,
+                    PhoneNumber = records.u.PhoneNumber,
                     Gender = records.u.Gender,
                     CreatedBy = records.u.CreatedBy,
-                    AccountImage = records.u.AccountImage ?? string.Empty,
                     RoleID = records.ur.LookUpRoleID,
                     RoleName = records.r.RoleName
-
                 }).ToList();
             }
-
-
             return list;
         }
 
@@ -208,12 +231,16 @@ namespace Artikulo.Models.EntityManager
         {
             using (MyDBContext db = new MyDBContext())
             {
-                var user = db.SystemUsers.Where(o =>
-                o.LoginName.ToLower().Equals(loginName));
-                if (user.Any())
-                    return user.FirstOrDefault().PasswordEncryptedText;
+                var user = db.SystemUsers.FirstOrDefault(o => o.LoginName.ToLower().Equals(loginName)); // Get the first matching user
+
+                if (user != null && user.PasswordEncryptedText != null)
+                {
+                    return user.PasswordEncryptedText;
+                }
                 else
+                {
                     return string.Empty;
+                }
             }
         }
 
