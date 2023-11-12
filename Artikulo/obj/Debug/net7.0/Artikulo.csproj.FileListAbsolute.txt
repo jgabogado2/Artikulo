@@ -77,6 +77,7 @@ C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\runtimes\win\lib\
 C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Runtime.Caching.dll
 C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+<<<<<<< HEAD
 D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\bin\Debug\net7.0\appsettings.Development.json
 D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\bin\Debug\net7.0\appsettings.json
 D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\bin\Debug\net7.0\Artikulo.staticwebassets.runtime.json
@@ -157,3 +158,8 @@ D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\o
 D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\obj\Debug\net7.0\Artikulo.genruntimeconfig.cache
 D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\obj\Debug\net7.0\ref\Artikulo.dll
 D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\bin\Debug\net7.0\BCrypt.Net.dll
+=======
+C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\NewsAPI.dll
+C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\Newtonsoft.Json.dll
+C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\BCrypt.Net.dll
+>>>>>>> 93387bb96b3af8b002c10748c0f91af9aa1097d7
