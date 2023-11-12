@@ -7810,19 +7810,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Adan Cabildo\\.nuget\\packages\\": {}
+    "C:\\Users\\jayzp\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\Artikulo.csproj",
+      "projectUniqueName": "C:\\Users\\jayzp\\Downloads\\Tester\\Artikulo\\Artikulo.csproj",
       "projectName": "Artikulo",
-      "projectPath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\Artikulo.csproj",
-      "packagesPath": "C:\\Users\\Adan Cabildo\\.nuget\\packages\\",
-      "outputPath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\obj\\",
+      "projectPath": "C:\\Users\\jayzp\\Downloads\\Tester\\Artikulo\\Artikulo.csproj",
+      "packagesPath": "C:\\Users\\jayzp\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jayzp\\Downloads\\Tester\\Artikulo\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Adan Cabildo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\jayzp\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7903,12 +7903,6 @@
     }
   },
   "logs": [
-    {
-      "code": "Undefined",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Problem reading the cache file D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
-    },
     {
       "code": "NU1701",
       "level": "Warning",
