@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\Artikulo.csproj": {}
+    "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V3\\J3A-Artikulo-\\Artikulo\\Artikulo\\Artikulo.csproj": {}
   },
   "projects": {
-    "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\Artikulo.csproj": {
+    "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V3\\J3A-Artikulo-\\Artikulo\\Artikulo\\Artikulo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\Artikulo.csproj",
+        "projectUniqueName": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V3\\J3A-Artikulo-\\Artikulo\\Artikulo\\Artikulo.csproj",
         "projectName": "Artikulo",
-        "projectPath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\Artikulo.csproj",
+        "projectPath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V3\\J3A-Artikulo-\\Artikulo\\Artikulo\\Artikulo.csproj",
         "packagesPath": "C:\\Users\\Adan Cabildo\\.nuget\\packages\\",
-        "outputPath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\obj\\",
+        "outputPath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V3\\J3A-Artikulo-\\Artikulo\\Artikulo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Adan Cabildo\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -65,6 +65,10 @@
             "Microsoft.Owin.Security.Cookies": {
               "target": "Package",
               "version": "[4.2.2, )"
+            },
+            "NewsAPI": {
+              "target": "Package",
+              "version": "[0.7.0, )"
             }
           },
           "imports": [
