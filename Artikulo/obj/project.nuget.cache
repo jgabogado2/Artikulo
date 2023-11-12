@@ -1,12 +1,8 @@
 {
   "version": 2,
-<<<<<<< HEAD
   "dgSpecHash": "nrW9qUhf9+hV1LJGE201PyTU0vXaW6quuWPpyAECg1BlHpShlKJCzD/8JHnbdrA/M2aBxXlVHKNxdhHpzJwcIw==",
-=======
-  "dgSpecHash": "QRTKylnv3uFYtz5gtVkpQD3c3wJVzg/OpTikUNOHwOa2VFfkU5rjpw37L2yq7layeI0P2qXpwWcsXD4xlbt//g==",
->>>>>>> 26bee63b28840e8f1d56ecb848183d27743d99aa
   "success": true,
-  "projectFilePath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V3\\J3A-Artikulo-\\Artikulo\\Artikulo\\Artikulo.csproj",
+  "projectFilePath": "D:\\USER\\Skool\\APC\\3rd_Year\\1st_Term\\ENTJAVA\\J3A-Artikulo V.2\\Artikulo\\Artikulo\\Artikulo.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Adan Cabildo\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Adan Cabildo\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

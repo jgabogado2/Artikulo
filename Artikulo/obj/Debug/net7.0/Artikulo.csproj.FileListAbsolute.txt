@@ -163,3 +163,5 @@ C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\NewsAPI.dll
 C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\Newtonsoft.Json.dll
 C:\Users\jayzp\source\repos\Artikulo\Artikulo\bin\Debug\net7.0\BCrypt.Net.dll
 >>>>>>> 93387bb96b3af8b002c10748c0f91af9aa1097d7
+D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\bin\Debug\net7.0\NewsAPI.dll
+D:\USER\Skool\APC\3rd_Year\1st_Term\ENTJAVA\J3A-Artikulo V.2\Artikulo\Artikulo\bin\Debug\net7.0\Newtonsoft.Json.dll

@@ -226,6 +226,7 @@ namespace Artikulo.Models.EntityManager
                 return db.SystemUsers.Where(u => u.LoginName.Equals(loginName)).Any();
             }
         }
+        
 
         public string GetUserPassword(string loginName)
         {
